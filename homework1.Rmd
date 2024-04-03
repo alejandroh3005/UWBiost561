@@ -1,0 +1,260 @@
+---
+title: "BIOST 561: Homework 1"
+date: "Due date: 7:00pm on Monday, April 8th, 2024"
+output: 
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float:
+      toc_collapsed: true
+    theme: united
+vignette: >
+  %\VignetteIndexEntry{BIOST 561: Homework 1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+set.seed(10)
+```
+
+# Instructions
+
+These instructions are essential, so please read them all carefully. 
+
+- Submit your homework as both the RMarkdown (`.Rmd`) file and HTML file on your GitHub page. 
+(More on this later, as the first homework will guide you on how to do this.) 
+
+- Please answer the question prompt and show your code (inline). That is,
+all your code should be visible in the knitted chunks.
+
+- To complete this homework, you may write in the `homework1.Rmd` file. 
+(It is recommended to complete this homework in R Studio, where clicking the
+`Knit` button would knit your homework.)
+
+# Disclosures
+
+- Please disclose below who you collaborated with and if you've used ChatGPT (or any
+comparable AI tool) to what extent when completing this homework. See the syllabus
+for the course expectations.
+
+# Q0: Survey
+
+<mark>**Intent**: This question is simply for course logistics and for the course instructors to get to know you.</mark>
+
+- <u>**Question 0A**</u>: Please let us know your preferred name.
+
+**Alejandro Hernandez**
+
+- <u>**Question 0B**</u>: Please read the syllabus in its entirety and write, "I have read 
+and understood the entire syllabus,"
+for this question. If you have any questions about the syllabus (for example, on 
+the homework submission policy or collaboration policy), you may ask them here.
+
+**I have read and understood the entire syllabus.**
+
+- <u>**Question 0C**</u>: If any, please briefly describe the courses you have taken at UW that 
+involve coding (in any language) so far and how familiar/comfortable you are in coding in R. (Note: We do not expect you to have 
+taken any such courses already.)
+
+**Biostatistics I and II (BIOST 514/515) had assignments completed in R.**
+
+- <u>**Question 0D**</u>: What do you hope to learn from this course? (It is alright if you leave this blank, but it would be helpful to hear your thoughts.)
+
+**I want my GitHub portfolio to be clean and show off my work and coding expertise.**
+
+# Q1: Setting up an R package and GitHub
+
+<mark>**Intent**: This section is not a question but to guide you 
+step-by-step on how to
+make an R package and a GitHub, which will be critical for this course.
+This question will be challenging for students who are not familiar with
+R Studio or GitHub, so please ask the instructor questions.</mark>
+
+Please read and walk through [https://docs.google.com/document/d/14r1u8JkRu9ClK4XldJaSRWN7MaK5JCFq0DIuzZdNxMM/edit?usp=sharing](https://docs.google.com/document/d/14r1u8JkRu9ClK4XldJaSRWN7MaK5JCFq0DIuzZdNxMM/edit?usp=sharing), as we have mentioned in class.
+Upon completion of this walkthrough, to get full marks for this question,
+you should have:
+
+1. Created a GitHub account,
+2. Created a private GitHub repository called `UWBiost561`,
+3. Created an R package, which is located in your GitHub repository `UWBiost561`,
+4. Created a vignette, which includes both `homework1.Rmd` and `homework1.html`
+under the `vignettes` folder, in your GitHub repository `UWBiost561`,
+5. Added the username `linnykos` as a Collaborator to your GitHub repository `UWBiost561`.
+
+<u>**Note**</u>: If you do not have a lot of familiarity with R Studio or GitHub,
+this question *will* be quite challenging (even though all you're doing is
+following through a walkthrough). Please start this early if you feel nervous
+about this because your instructor (Kevin) can better help you if you give
+him ample time and come to office hours.
+
+(You do not need to write anything for this question.)
+
+# Q2: Simulating the Central Limit Theorem
+
+<mark>**Intent**: This question is a simple coding exercise to demonstrate
+familiarity with how to do basic coding in R.</mark>
+
+Load in the `generate_data` function using the following code (all one line).
+
+```{r}
+source("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/homework1/generate_data.R")
+```
+
+This code sources the `generate_data` function into your current R workspace.
+
+<u>**Question 2A**</u>: 
+Read the function (either at the URL provided or by typing `generate_data` into your console), 
+and in one to three sentences, describe the input and output of the provided
+function and what the function is doing. You may use equations if needed.
+
+<u>**Question 2B**</u>: 
+We will now be using the `generate_data` function.
+Observe that if we run the following code, we would compute a (random, empirical) mean of the
+a dataset with `n=10` samples:
+```{r}
+mean(generate_data(n=10))
+```
+Repeat the above code 10,000 times (i.e., 10,000 trials, but keeping `n=10` for
+each trial), and plot a histogram of the 10,000 different empirical means with 100 breaks (i.e., `breaks = 100`).
+Repeat this process for `n` with values of 1, 2, 3, 5, and 100, and plot these six histograms
+in order of increasing `n`. 
+
+Figure \@ref(fig:clt) shows the desired plot you aim to reproduce. 
+In particular, reproduce the X- and Y-labels,
+the title of the plot, and the plot layout. 
+(Hint: You might find the `par` function useful, especially
+the `mar` and `mfrow` arguments, as well as the `paste`
+function. See the documentation for `par`.)
+
+```{r clt, out.width = "600px", fig.align="center", echo = FALSE, fig.cap=c("The figure you are trying to reproduce (without the Sample watermark) in Question 2B, barring the dimensions/proportions of the figure itself and randomness inherent to the simulation.")}
+knitr::include_graphics("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/homework1/clt_editted.png")
+```
+
+<u>**Question 2C**</u>: 
+In one to three sentences, write how the plot you reproduced helps to verify 
+the Central Limit Theorem.
+
+# Q3: Basic data analysis
+
+<mark>**Intent**: This question is a simple data analysis to demonstrate
+familiarity with how to perform basic operations in R.</mark>
+
+In this question, we'll load a simple dataset related to Alzheimer's Disease (AD) research.
+The data originates from a single-cell database from 
+[this study](https://portal.brain-map.org/explore/seattle-alzheimers-disease).
+However, since this is the first homework, we'll mainly work with donor-level
+data instead of the cell-level data.
+
+```{r}
+df <- read.csv("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/homework1/sea-ad.csv")
+
+head(df)
+
+summary(df)
+```
+
+Here are brief descriptions of each variable:
+
+- `Donor.ID`: The anonymized ID of the donor who donated their brain to AD research
+- `Age.at.Death`: The age of the donor when they passed away
+- `Sex`: The biological sex of the donor. (Kevin's comment: In this study, it seems like this is strictly only `Male` or `Female`...?)
+- `APOE4.Status`: `Y` (for yes) or `N` (for no) if the donor has a particular genetic variant that is known to be a risk factor for AD
+- `Cognitive.Status`: Whether the donor has dementia or not based on a wide array of cognitive assessments before death
+- `Last.CASI.Score`: The last score the donor had, measured via CASI (a specific set of cognitive questions), before death
+- `Braak`: Different severities of neuropathology based on the donor's brain tissue, extracted after the donor's consent and death 
+
+Hopefully, this is a reminder to carefully describe your study variables in any dataset you publish or collaborate on!
+
+<u>**Question 3A**</u>: Describe, in two to four sentences, what the `head(df)`
+and `summary(df)` results display. 
+
+<u>**Question 3B**</u>: Use a simple function to print out the dimensionality
+of `df` (i.e., how many rows and columns there are). 
+What is the class of `df`?
+
+<u>**Question 3C**</u>: You'll note that in `summary(df)`, the variable `Age.at.Death`
+is a `character`, even though it should be a numeric. This is because
+there are values of `90+`. As a simple diagnostic, 1) replace all the `90+` values
+in `df$Age.at.Death` with `90`, 2) convert `df$Age.at.Death` from a character
+to a numeric, and 3) plot a histogram of `df$Age.at.Death`.
+
+Figure \@ref(fig:hist) shows the desired plot you aim to reproduce.
+
+```{r hist, out.width = "300px", fig.align="center", echo = FALSE, fig.cap=c("The figure you are trying to reproduce (without the Sample watermark) in Question 3C, barring the dimensions/proportions of the figure itself.")}
+knitr::include_graphics("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/homework1/histogram-editted.png")
+```
+
+<u>**Question 3D**</u>: The `summary()` function is much more useful when the columns
+of `df` are factors, not characters. Write some lines of code to convert the variables
+`Sex`, `APOE4.Status`, `Cognitive.Status`, and `Braak` to be factors. (This should take
+less than 10 lines of code.)
+
+<u>**Question 3E**</u>: With this new version of `df`, after finishing the previous
+questions, show the result of `summary(df)`.
+
+Figure \@ref(fig:summary) shows the desired output you aim to reproduce.
+
+```{r summary, out.width = "400px", fig.align="center", echo = FALSE, fig.cap=c("The intended output of Question 3E.")}
+knitr::include_graphics("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/homework1/summary-editted.png")
+```
+
+In one sentence, describe how the summary here (in Question 3E) is more
+informative than the summary shown at the start of Question 3.
+
+<u>**Question 3F**</u>: Using the `table()` function, display the relation
+between `Braak` and `Cognitive.Status`. Please look at `?table` (for the documentation
+of `table()`) if you are unfamiliar with this function.
+
+<u>**Question 3G**</u>: This question will be slightly challenging. The `table()`
+function is not as useful when there are many unique values (such as in `Last.CASI.Score`).
+To overcome this, look up the documentation for the `cut` and `quantile` functions.
+The goal is to use the `table()`, `cut()`, and `quantile()` to
+show the relation of the quantiles of `Last.CASI.Score` with `Cognitive.Status`.
+You will want to use `na.rm=TRUE` when using the `quantile()` function.
+
+Figure \@ref(fig:table) shows the desired output you aim to reproduce.
+
+```{r table, out.width = "200px", fig.align="center", echo = FALSE, fig.cap=c("The intended output of Question 3G.")}
+knitr::include_graphics("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/homework1/table-editted.png")
+```
+
+In one to two sentences, describe what you can learn from the relation between
+`Last.CASI.Score` and `Cognitive.Status` based on this result.
+
+# Q4: Pushing the homework onto GitHub
+
+<mark>**Intent**: This section is not a question but a guide 
+on submitting your homework. This procedure will 
+be the expectation for all future homeworks.</mark>
+
+Now that you have completed this homework, all that's remaining is to
+push this homework onto your `UWBiost561` GitHub repository.
+To do this, please ensure:
+
+1. Your file is named `homework1.Rmd`. (This current homework file you are
+writing in will replace the initial `homework1.Rmd` you made when
+you completed the walkthrough in Question 1.)
+2. Your file is in the `vignettes` folder in your `UWBiost561` R package.
+3. You push your two files, `homework1.Rmd` and `homework1.html` (the latter is the knitted HTML file) onto your GitHub repository.
+4. Double-check that you can see both files online on github.com when you look at your repository.
+
+Again, ensure the username `linnykos` is added to your private GitHub repository. And with that, you're done! (For future homeworks, you will be "submitting" your homeworks like this.)
+
+(You do not need to write anything for this question.)
+
+# Q5: Feedback (Optional)
+
+This "question" is an additional way for students to communicate with instructors. 
+You could include positive feedback about topics you enjoyed learning this module, critiques about 
+the course difficulty/pacing, 
+or some questions/confusions you had about course material.
+Your feedback can help us shape the course for the rest of this quarter and 
+future years. Please be mindful and polite when providing feedback.
+You may leave this question blank.
+
+
