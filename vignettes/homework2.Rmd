@@ -1,0 +1,304 @@
+---
+title: "BIOST 561: Homework 2"
+date: "Due date: 7:00pm on Monday, April 22nd, 2024"
+output: 
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float:
+      toc_collapsed: true
+    theme: united
+vignette: >
+  %\VignetteIndexEntry{BIOST 561: Homework 2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = T,
+  comment = "#>",
+  warning = F,
+  message = F)
+set.seed(10)
+```
+
+# Q0: Setting up your `UWBiost561` package
+
+<u>**Question 0A**</u>: Completed
+
+<u>**Question 0B**</u>: Completed
+
+<u>**Question 0C**</u>: Completed
+
+```{r}
+library(bookdown)
+library(tidyverse)
+library(ggplot2)
+```
+
+<u>**Question 0D**</u>: Completed
+
+# Q1: Practice using tibbles
+
+<mark>**Intent**: This question is to give you some basic practice
+using tibbles (and the tidyverse way of analyzing data, overall).</mark>
+
+For this question, we'll be using two datasets that collect various
+statistics of countries over many years. The first dataset is the `gt` package (see [https://search.r-project.org/CRAN/refmans/gt/html/countrypops.html](https://search.r-project.org/CRAN/refmans/gt/html/countrypops.html)), and has been formatted specifically for this homework. It can be loaded in the following code:
+
+```{r}
+# import data
+country_population <- readr::read_csv("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/country_population.csv")
+
+# present 5 random rows
+country_population[sample(nrow(country_population), 5),]
+```
+
+`country_population` contains the following columns:
+
+- `iso3c`: Three-letter country code (see [https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3))
+- `country`: Country name
+- `year`: Year the statistic is collected
+- `population`: Population, based on the World Bank estimate 
+
+The next dataset is from [https://paldhous.github.io/NICAR/2017/r-analysis.html](https://paldhous.github.io/NICAR/2017/r-analysis.html), and has also been formatted specifically for this homework. It
+can be loaded in the following code:
+
+```{r}
+# load data
+country_birth <- readr::read_csv("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/country_birth.csv")
+
+# select 5 random rows
+country_birth[sample(nrow(country_birth), 5),]
+```
+
+`country_birth` contains the following columns:
+
+- `iso2c`: Two-letter country code
+- `iso3c`: Three-letter country code
+- `year`: Year the statistic is collected
+- `life_expect`: Life expectancy at birth, in years.
+- `birth_rate`: Live births during the year per 1,000 people
+- `neonat_mortal_rate`: Neonatal mortality rate: babies dying before reaching 28 days of age per 1,000 live births in a given year
+
+This question will allow you to practice basic data manipulation of these two `tibble` objects.
+
+<u>**Question 1A**</u>: We will be manipulating the `country_population` data in this question.
+Your goal is the following: 
+Select only rows for years between 1990 and 2010 (inclusive).
+Then, compute the mean population across all the years of a country
+for each country (defining a new variable called `mean_population`,
+via the `group_by()` and `summarize()` functions).
+
+```{r question-1a}
+country_population <- country_population %>% 
+  dplyr::filter(1990 <= year & year <= 2010) %>%
+  group_by(iso3c, country) %>%
+  summarize(mean_population = mean(population))
+
+head(country_population)
+```
+
+<u>**Question 1B**</u>: 
+We will be manipulating the `country_birth` data in this question.
+Your goal is the following: 
+Select only rows for years between 1990 and 2010 (inclusive),
+keep the `iso3c`, `year`, `life_expect` columns, and
+then drop all rows with any `NA` in any of the 3 columns.
+Then, compute the minimum and maximum life expectancy (named as new columns
+called `min_life_expect` and `max_life_expect`) for each country
+across all the years (via the `summarize()` function),
+and finally, create a new column called `range_life_expect` that is the number of years between `min_life_expect` and `max_life_expect`
+for each country (via the `mutate()` function).
+
+```{r question-1b}
+country_birth <- country_birth %>%
+  filter(1990 <= year & year <= 2010) %>%
+  select(iso3c, year, life_expect) %>%
+  drop_na %>%
+  group_by(iso3c) %>%
+  summarize(min_life_expect = round(min(life_expect), 1),
+            max_life_expect = round(max(life_expect), 1),
+            range_life_expect = round(max_life_expect - min_life_expect, 2))
+
+head(country_birth)
+```
+
+<u>**Question 1C**</u>: We will now combine `country_population` and `country_birth`
+via a join.
+Specifically, using an `inner_join()` function, combine both these
+datasets by the `iso3c` variable, and call the new `tibble` object as
+`country_both`. Print out the first 10 rows of `country_both`. How many rows and columns are in `country_both`?
+
+```{r question-1c}
+country_both <- inner_join(country_population, country_birth, by="iso3c")
+head(country_both, 10)
+dim(country_birth) # 203 rows, 4 columns
+```
+
+# Q2: Practice using ggplot via scatterplots and facets
+
+<mark>**Intent**: This question is to give you some basic practice using
+ggplot, mainly plotting scatterplots and faceting the plots.</mark>
+
+For this question, we'll be using a dataset about the penguins from the Palmer Archipelago from [https://allisonhorst.github.io/palmerpenguins/reference/penguins.html](https://allisonhorst.github.io/palmerpenguins/reference/penguins.html). We've processed it lightly for this homework. 
+
+```{r}
+# load data
+penguins <- readr::read_csv("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/palmerpenguins.csv")
+head(penguins)
+```
+
+You can see its original documentation for describing the variables in the dataset.
+
+The following code makes a basic scatter plot. We will be improving this plot
+over the following sub-questions.
+
+```{r}
+penguins %>%
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point()
+```
+
+<u>**Question 2A**</u>: With the `penguins` dataset, change the x-axis label and y-axis label to say `Bill Depth (mm)` and `Bill length (mm)` respectively, as well as the title of the plot to write `Relation among ??? penguins`, where you use code to count how many rows there are in `penguins` automatically (in place of `???`).
+Additionally, color each point based on their `species`, where `Adelie` has the color `cornflowerblue`, `Chinstrap` has the color `coral2`,and `Gentoo` has the color `goldenrod3`.
+
+```{r question-2a}
+penguins %>%
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, color=species)) +
+  geom_point() +
+  xlab("Bill depth (mm)") + ylab("Bill length (mm)") + 
+  labs(title = paste("Relation among", nrow(penguins), "penguins")) +
+  scale_color_manual(values = c("cornflowerblue", "coral2", "goldenrod3"))
+```
+
+<u>**Question 2B**</u>: We now will make the following changes: 
+1) we will facet the scatterplot based on the `species`, 
+2) we will add a linear regression fit on each `species` (regression
+`bill_length_mm` onto the `bill_depth_mm`) and plot the linear regression fit, and
+3) changing the transparency of the points to be 50\% transparent (i.e., `alpha=0.5`).
+
+```{r question-2b}
+penguins %>%
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, color=species)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = F) +
+  facet_wrap(vars(species)) +
+  xlab("Bill depth (mm)") + ylab("Bill length (mm)") + 
+  labs(title = paste("Relation among", nrow(penguins), "penguins")) +
+  scale_color_manual(values = c("cornflowerblue", "coral2", "goldenrod3"))
+```
+
+# Q3: Practice using ggplot via heatmaps
+
+<mark>**Intent**: This question is to give you some basic practice using
+ggplot, mainly plotting heatmaps. You will also see this `generate_random_graph()` function again in future homeworks.</mark>
+
+Run the following code to load the `generate_random_graph()`, which generates `adj_mat`, a random adjacency matrix (corresponding to a graph with 20 nodes).  Each row/column of `adj_mat` corresponds to one of the 20 nodes, and a value of 0 or 1 denotes the lack or presence of an edge between two nodes, respectively.
+
+```{r}
+source("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R")
+```
+
+```{r}
+set.seed(0)
+result <- generate_random_graph(n= 20, clique_fraction = 0.5, density_low = 0.1)
+adj_mat <- result$adj_mat
+dim(adj_mat)
+adj_mat[1:5,1:5]
+```
+
+<u>**Question 3A**</u>: Read how the provided `generate_random_graph()` works (either typing `generate_random_graph` into the R console
+or reading the code at [https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R](https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R)). In three to five sentences, describe what `generate_random_graph()` does.
+
+**Answer here**
+
+<u>**Question 3B**</u>: You will now write code to produce a heatmap to visualize `adj_mat`. Before this can happen, though,
+you need one more function to convert `adj_mat` into a "long form,"
+which is a necessity when visualizing any plot as a heatmap in ggplot. 
+See [https://r-graph-gallery.com/heatmap.html](https://r-graph-gallery.com/heatmap.html). This is done via the provided `pivot_longer_heatmap()` function:
+
+```{r}
+mat_long <- pivot_longer_heatmap(adj_mat)
+mat_long
+```
+
+Read what the `pivot_longer_heatmap()` function
+does (either typing `pivot_longer_heatmap` into the R console
+or reading the code at [https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R](https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R)). In three to five sentences, describe what `pivot_longer_heatmap()` does. Specifically, how does the output of
+`pivot_longer_heatmap()` relate to `adj_mat`?
+
+**Answer here**
+
+(Hint: For this question, it might be helpful to manually run the function line-by-line in your R console to see what each line of code does. The hardest part of this question will be understanding what the `pivot_longer` function does.
+Look at the documentation of this function via `?tidyr::pivot_longer`. It might also be helpful to recall, in your R console, what the values of `adj_mat[1,1]`, `adj_mat[1,2]`, `adj_mat[1,3]`, ... are. How do they look similar to rows in `mat_long`?)
+
+<u>**Question 3C**</u>: Now you are ready to write code to visualize `mat_long` as a heatmap. Write code using ggplot's functions to do this. You want to color all the `0` values as `palegoldenrod` and all the `1` values as `coral2`. Please set the aspect ratio of this plot to be 1:1 (i.e., your "boxes" are squares) via the `coord_fixed()` function.
+
+In two to four sentences, describe how the plot you made relates to `adj_mat`.
+
+**Answer here**
+
+(Hint: This question will be tricky, even though you need only roughly 7 functions. You likely want to use the `geom_tile()` and `scale_fill_manual()` functions.)
+
+Figure \@ref(fig:adjmat) shows the plot you are trying to reproduce.
+
+```{r adjmat, out.width = "350px", fig.align="center", echo = FALSE, fig.cap=c("The plot you are trying to reproduce (without the Sample watermark) in Question 3C.")}
+knitr::include_graphics("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/adj_mat.png")
+```
+
+<u>**Question 3D**</u>: Congratulations! You have a working pipeline to visualize any adjacency matrix. For this last question, we will combine all your functions to visualize the following:
+
+```{r}
+adj_mat2 <- result$adj_mat[result$rev_order, result$rev_order]
+```
+
+You can double-check yourself to see that this line of code only permutes the rows and columns. The actual "graph" does not change (since the ordering of the rows/columns is arbitrary).
+
+Use the provided `pivot_longer_heatmap()` function and your code from Question 3C to visualize `adj_mat2`. (You are mainly copy-pasting the code from your previous questions but now applying it to `adj_mat2`.)
+
+You will see a dense set of red blocks in the bottom-left corner of the heatmap. In two sentences, 
+what does this plot tell us about `adj_mat2`, and in turn,
+about `adj_mat`? (Hint: Question 4 will give you some context to answer this question.)
+
+Figure \@ref(fig:adjmat2) shows the plot you are trying to reproduce.
+
+```{r adjmat2, out.width = "350px", fig.align="center", echo = FALSE, fig.cap=c("The plot you are trying to reproduce (without the Sample watermark) in Question 3D.")}
+knitr::include_graphics("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/adj_mat2.png")
+```
+
+
+# Q4: Planning for the next homework -- thinking how to test a function
+
+<mark>**Intent**: This question will get you started on how to think about testing a function.</mark>
+
+Question 3 demonstrates a "planted clique" -- there might be a clique in a random graph (i.e., a collection of connected nodes). This clique might not be evident at first glance (as demonstrated in Question 3C), but when you permute the rows and columns (as done in Question 3D), the clique is quite apparent. (In Lecture 4, we will go over the basics of thinking about graphs and adjacency matrices. Please watch the Panopto. recording on Canvas if you want some context.)
+
+Suppose your teammate gave you a function to find the **maximal clique** in an adjacency matrix (i.e., the set of nodes that forms the largest clique).
+You are not told the typical size and characteristics of these adjacency matrices beforehand.
+Your job is to make sure this function is correct since you and your teammate are about to give this function to your manager, who will then give it to another division in your company to use. Your performance review will depend highly on whether or not other people in your company can reliably use your function.
+
+In a short paragraph, write down ways to ensure your
+teammate's function is "correct." Please list at least four different ways you can test this function. You can interpret this notion of "correct" very liberally -- this question is purposely framed to be open-ended.
+
+(I am purposely not giving you the implementation of such a function.
+Please do not use ChatGPT for this specific question.)
+
+(For those curious, this is the "Maximal Clique Problem" (MCP), which is a classic example of a "hard" problem in Computer Science theory. See [https://arxiv.org/abs/2403.09742](https://arxiv.org/abs/2403.09742). You do not need to read this paper to complete this question -- it's simply for additional reading for curious students.)
+
+# Q5: Feedback (Optional)
+
+This "question" is an additional way for students to communicate with instructors. 
+You could include positive feedback about topics you enjoyed learning in this module, critiques about 
+the course difficulty/pacing, 
+or some questions/confusions you had about course material.
+Your feedback can help shape the course for the rest of this quarter and 
+future years. Please be mindful and polite when providing feedback.
+You may leave this question blank.
+
+* Question 1B: Adding the column for range doesn't require `mutate()`, we can do it right in `summarize()`! (so long as it's defined last)  
+
+* Question 2B: Did you intend for `alpha` to show up in the key? Assigning it a value outside `aes()` prevents it from showing there :-)
+
+
