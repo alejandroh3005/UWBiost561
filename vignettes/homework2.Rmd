@@ -195,7 +195,7 @@ penguins %>%
 <mark>**Intent**: This question is to give you some basic practice using
 ggplot, mainly plotting heatmaps. You will also see this `generate_random_graph()` function again in future homeworks.</mark>
 
-Run the following code to load the `generate_random_graph()`, which generates `adj_mat`, a random adjacency matrix (corresponding to a graph with 20 nodes).  Each row/column of `adj_mat` corresponds to one of the 20 nodes, and a value of 0 or 1 denotes the lack or presence of an edge between two nodes, respectively.
+**Run the following code to load the `generate_random_graph()`, which generates `adj_mat`, a random adjacency matrix (corresponding to a graph with 20 nodes).  Each row/column of `adj_mat` corresponds to one of the 20 nodes, and a value of 0 or 1 denotes the lack or presence of an edge between two nodes, respectively.**
 
 ```{r}
 source("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R")
@@ -212,7 +212,7 @@ adj_mat[1:5,1:5]
 <u>**Question 3A**</u>: Read how the provided `generate_random_graph()` works (either typing `generate_random_graph` into the R console
 or reading the code at [https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R](https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R)). In three to five sentences, describe what `generate_random_graph()` does.
 
-**Answer here**
+**After ensuring all the arguments are valid, it generate a non-symmetric matrix with randomly placed 0's and 1's. Then the matrix is added to its transpose to be made symmetric and corrected so all values are 0 or 1. Then a clique (fully connected sub-matrix) is made and the nodes randomized. This is returned alongside the matrix's reverse order.**
 
 <u>**Question 3B**</u>: You will now write code to produce a heatmap to visualize `adj_mat`. Before this can happen, though,
 you need one more function to convert `adj_mat` into a "long form,"
@@ -229,7 +229,7 @@ does (either typing `pivot_longer_heatmap` into the R console
 or reading the code at [https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R](https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/random_graph_functions.R)). In three to five sentences, describe what `pivot_longer_heatmap()` does. Specifically, how does the output of
 `pivot_longer_heatmap()` relate to `adj_mat`?
 
-**Answer here**
+**The function converts the (adjacency) matrix to a tibble, defines a new column for row numbers, and transforms the matrix to a long format, such that the columns indicate the coordinate and value of the cells in the given adjacency matrix. The long version **
 
 (Hint: For this question, it might be helpful to manually run the function line-by-line in your R console to see what each line of code does. The hardest part of this question will be understanding what the `pivot_longer` function does.
 Look at the documentation of this function via `?tidyr::pivot_longer`. It might also be helpful to recall, in your R console, what the values of `adj_mat[1,1]`, `adj_mat[1,2]`, `adj_mat[1,3]`, ... are. How do they look similar to rows in `mat_long`?)
@@ -238,14 +238,15 @@ Look at the documentation of this function via `?tidyr::pivot_longer`. It might 
 
 In two to four sentences, describe how the plot you made relates to `adj_mat`.
 
-**Answer here**
+**The plot is a visualization of the adjacency matrix, so cells at location (X,Y) indicate whether node X and node Y share an edge. Cell values of 1 indicate an edge is present, 0 indicate no edge. Note that diagonal cells at locations (X,X) have cell values of 1.**
 
-(Hint: This question will be tricky, even though you need only roughly 7 functions. You likely want to use the `geom_tile()` and `scale_fill_manual()` functions.)
-
-Figure \@ref(fig:adjmat) shows the plot you are trying to reproduce.
-
-```{r adjmat, out.width = "350px", fig.align="center", echo = FALSE, fig.cap=c("The plot you are trying to reproduce (without the Sample watermark) in Question 3C.")}
-knitr::include_graphics("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/adj_mat.png")
+```{r question-3c, fig.width=6, fig.height=5}
+mat_long %>%
+  mutate(Value = as.factor(Value)) %>%
+  ggplot(aes(x=X, y=Y, fill=Value)) +
+  geom_tile() +
+  scale_fill_manual(values = c("palegoldenrod", "coral2")) +
+  xlab("Column") + ylab("Row")
 ```
 
 <u>**Question 3D**</u>: Congratulations! You have a working pipeline to visualize any adjacency matrix. For this last question, we will combine all your functions to visualize the following:
@@ -258,16 +259,19 @@ You can double-check yourself to see that this line of code only permutes the ro
 
 Use the provided `pivot_longer_heatmap()` function and your code from Question 3C to visualize `adj_mat2`. (You are mainly copy-pasting the code from your previous questions but now applying it to `adj_mat2`.)
 
-You will see a dense set of red blocks in the bottom-left corner of the heatmap. In two sentences, 
-what does this plot tell us about `adj_mat2`, and in turn,
-about `adj_mat`? (Hint: Question 4 will give you some context to answer this question.)
-
-Figure \@ref(fig:adjmat2) shows the plot you are trying to reproduce.
-
-```{r adjmat2, out.width = "350px", fig.align="center", echo = FALSE, fig.cap=c("The plot you are trying to reproduce (without the Sample watermark) in Question 3D.")}
-knitr::include_graphics("https://raw.githubusercontent.com/linnykos/561_s2024_public/main/HW2_files/adj_mat2.png")
+```{r question-3d, fig.width=6, fig.height=5}
+pivot_longer_heatmap(adj_mat2) %>%
+  mutate(Value = as.factor(Value)) %>%
+  ggplot(aes(x=X, y=Y, fill=Value)) +
+  geom_tile() +
+  scale_fill_manual(values = c("palegoldenrod", "coral2")) +
+  xlab("Column") + ylab("Row")
 ```
 
+You will see a dense set of red blocks in the bottom-left corner of the heatmap. In two sentences, what does this plot tell us about `adj_mat2`, and in turn,
+about `adj_mat`? (Hint: Question 4 will give you some context to answer this question.)
+
+**Answer here.**
 
 # Q4: Planning for the next homework -- thinking how to test a function
 
@@ -282,10 +286,7 @@ Your job is to make sure this function is correct since you and your teammate ar
 In a short paragraph, write down ways to ensure your
 teammate's function is "correct." Please list at least four different ways you can test this function. You can interpret this notion of "correct" very liberally -- this question is purposely framed to be open-ended.
 
-(I am purposely not giving you the implementation of such a function.
-Please do not use ChatGPT for this specific question.)
-
-(For those curious, this is the "Maximal Clique Problem" (MCP), which is a classic example of a "hard" problem in Computer Science theory. See [https://arxiv.org/abs/2403.09742](https://arxiv.org/abs/2403.09742). You do not need to read this paper to complete this question -- it's simply for additional reading for curious students.)
+**First and foremost, I would test the function's accuracy with some small to moderately-sized example matrices. I would test the function's "correctness" by assessing its time and space complexity (how fast/efficient it is and how much computational space it takes up/computational tasks it creates)- I remember these as important metrics from my Computer Science courses. Finally, I might consider the function's readability as a relevant consideration, because if the code is a gargled mess people in the company will have difficulty using it.**
 
 # Q5: Feedback (Optional)
 
