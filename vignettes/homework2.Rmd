@@ -271,7 +271,7 @@ pivot_longer_heatmap(adj_mat2) %>%
 You will see a dense set of red blocks in the bottom-left corner of the heatmap. In two sentences, what does this plot tell us about `adj_mat2`, and in turn,
 about `adj_mat`? (Hint: Question 4 will give you some context to answer this question.)
 
-**Answer here.**
+**This block of red is from a fully connected sub-network (aka clique), as visualized in a re-arranged adjacency matrix.**
 
 # Q4: Planning for the next homework -- thinking how to test a function
 
@@ -301,5 +301,3 @@ You may leave this question blank.
 * Question 1B: Adding the column for range doesn't require `mutate()`, we can do it right in `summarize()`! (so long as it's defined last)  
 
 * Question 2B: Did you intend for `alpha` to show up in the key? Assigning it a value outside `aes()` prevents it from showing there :-)
-
-
