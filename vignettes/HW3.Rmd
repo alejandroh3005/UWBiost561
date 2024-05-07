@@ -139,8 +139,8 @@ library(UWBiost561)
 set.seed(0)
 simulation <- UWBiost561::generate_partial_clique(
   n = 10,
-  clique_fraction = 0.5,
-  clique_edge_density = 0.9
+  clique_fraction = .5,
+  clique_edge_density = .9
 )
 
 simulation$adj_mat
@@ -395,7 +395,7 @@ knitr::include_graphics("https://github.com/linnykos/561_s2024_public/blob/main/
 <u>**Question 4D**</u>: Please include the following code chunk's result in your Markdown file. (If you are copy-pasting the following R chunk,
 remove the `eval = FALSE` tag.) This will be useful for me (Kevin) to assess which packages and R version you are using.
 
-```{r, eval = FALSE}
+```{r}
 devtools::session_info()
 ```
 
@@ -421,8 +421,13 @@ For this reason, I <u>**strongly**</u> encourage you to take diligence testing y
 
 If you can, please write, "I can access OpenSesame." If not, please write, "I cannot access OpenSesame," and please email Kevin immediately (who will help get you access to OpenSesame).
 
+**I can access OpenSesame.**
+
 <u>**Question 5B**</u>: In a few sentences, please describe what you think
 you'd like to make do for your final project. It is 100% okay for you to "reuse" R code for another course (either past or current, even from your previous institution).
+
+**I think I will use the R code for the BIOST 579 class: Data Analysis and Reporting, which is mainly exploratory data analysis. The functions may be constructing plots and graphs in a streamlined way. **
+
 Ideally, it is R code that **you** care about. What you write here is **not** committal -- you can change your idea anytime. The intent of this question is to get you to start thinking about this.
 
 The full project specifications will be released in a few weeks. To give you a sense of what to expect, you'll be making a PkgDown website that looks like [https://linnykos.github.io/561_s2024_example/](https://linnykos.github.io/561_s2024_example/). Briefly, this will involve:
