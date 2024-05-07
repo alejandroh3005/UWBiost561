@@ -1,19 +1,12 @@
-helper_gpc <- function () {
-  return("I am your helper!")
-}
-
-
 #' Generate a adjacency matrix representing a matrix containing a partial clique
 #'
 #' Function that constructs an adjacency matrix for a variable-sized matrix that
-#' contains a partial clique of variable-density
-#'
+#' contains a partial clique of variable-density#'
 #' @param n the number of nodes in the network
 #' @param clique_fraction the fraction of nodes that are in the partial clique
 #' @param clique_edge_density the density of edges present between nodes in the clique
 #'
 #' @return an adjacency matrix containing a partial clique
-#' @author Alejandro Hernandez \cr Maintainer: Alejandro Hernandez <alejh@@uw.edu>
 #' @export
 generate_partial_clique <- function (n,
                                      clique_fraction,
@@ -96,7 +89,6 @@ generate_partial_clique <- function (n,
     # symmetric matrix (equal to its transpose)
     all.equal(adj_mat, t(adj_mat)))
 
-  # list of output
-  outputs <- list(adj_mat = adj_mat)
-  return(outputs)
+  # list of outputs
+  return(list(adj_mat = adj_mat))
 }
