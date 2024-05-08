@@ -2,7 +2,11 @@
 % Please edit documentation in R/compute_maximal_partial_clique.R
 \name{compute_maximal_partial_clique}
 \alias{compute_maximal_partial_clique}
+<<<<<<< HEAD
 \title{Find the largest partial clique within a given adjacency matrix}
+=======
+\title{Find the largest partial clique within a given an adjacency matrix}
+>>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
 \usage{
 compute_maximal_partial_clique(adj_mat, alpha)
 }
@@ -15,5 +19,9 @@ compute_maximal_partial_clique(adj_mat, alpha)
 a list containing indices of the nodes within the clique and the actual edge density of the return partial clique
 }
 \description{
+<<<<<<< HEAD
 Find the largest partial clique within a given adjacency matrix
+=======
+Find the largest partial clique within a given an adjacency matrix
+>>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
 }

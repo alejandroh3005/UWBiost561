@@ -7,12 +7,20 @@
 is_partial_clique(submatrix, alpha = 1)
 }
 \arguments{
+<<<<<<< HEAD
 \item{submatrix}{a sub-matrix formed by a set of nodes}
+=======
+\item{submatrix}{a submatrix formed by a set of nodes}
+>>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
 
 \item{alpha}{the minimum required edge density of the partial clique}
 }
 \value{
+<<<<<<< HEAD
 TRUE or FALSE depending on whether the given sub-matrix forms a partial clique
+=======
+TRUE or FALSE depending on whether the given submatrix forms a partial clique
+>>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
 }
 \description{
 Helper function to check if a set of nodes forms a partial clique
