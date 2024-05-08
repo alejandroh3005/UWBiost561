@@ -8,7 +8,11 @@ is_partial_clique(submatrix, alpha = 1)
 }
 \arguments{
 <<<<<<< HEAD
+<<<<<<< HEAD
 \item{submatrix}{a sub-matrix formed by a set of nodes}
+=======
+\item{submatrix}{a submatrix formed by a set of nodes}
+>>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
 =======
 \item{submatrix}{a submatrix formed by a set of nodes}
 >>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
@@ -17,7 +21,11 @@ is_partial_clique(submatrix, alpha = 1)
 }
 \value{
 <<<<<<< HEAD
+<<<<<<< HEAD
 TRUE or FALSE depending on whether the given sub-matrix forms a partial clique
+=======
+TRUE or FALSE depending on whether the given submatrix forms a partial clique
+>>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
 =======
 TRUE or FALSE depending on whether the given submatrix forms a partial clique
 >>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f

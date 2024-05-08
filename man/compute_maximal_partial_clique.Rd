@@ -3,7 +3,11 @@
 \name{compute_maximal_partial_clique}
 \alias{compute_maximal_partial_clique}
 <<<<<<< HEAD
+<<<<<<< HEAD
 \title{Find the largest partial clique within a given adjacency matrix}
+=======
+\title{Find the largest partial clique within a given an adjacency matrix}
+>>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
 =======
 \title{Find the largest partial clique within a given an adjacency matrix}
 >>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
@@ -20,7 +24,11 @@ a list containing indices of the nodes within the clique and the actual edge den
 }
 \description{
 <<<<<<< HEAD
+<<<<<<< HEAD
 Find the largest partial clique within a given adjacency matrix
+=======
+Find the largest partial clique within a given an adjacency matrix
+>>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
 =======
 Find the largest partial clique within a given an adjacency matrix
 >>>>>>> 5fcb456f678efdbb507bc1d0586e00ed731c583f
