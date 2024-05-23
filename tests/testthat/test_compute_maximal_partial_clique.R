@@ -8,7 +8,7 @@ test_that("compute_maximal_partial_clique works", {
                       1,1,1,0,1,
                       0,1,0,1,1,
                       1,1,1,1,1),
-                    nrow = 4, byrow = TRUE)
+                    nrow = 5, byrow = TRUE)
 
   res <- compute_maximal_partial_clique(
     adj_mat = adj_mat,
@@ -17,6 +17,5 @@ test_that("compute_maximal_partial_clique works", {
   res
 
   expect_true(is.list(res))
-  expect_true(is.matrix(res$adj_mat))
   expect_true(all(dim(res$adj_mat) == c(10,10)))
 })

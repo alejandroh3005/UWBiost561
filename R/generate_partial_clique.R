@@ -9,8 +9,8 @@
 #' @return an adjacency matrix containing a partial clique
 #' @export
 generate_partial_clique <- function (n,
-                                     clique_fraction,
-                                     clique_edge_density) {
+                                     clique_fraction = 0.5,
+                                     clique_edge_density = 0.5) {
   stopifnot(
     # check arguments are numeric
     is.numeric(c(n, clique_fraction, clique_edge_density)),

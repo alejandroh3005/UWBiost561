@@ -1,20 +1,14 @@
-
 #' Find the largest partial clique within a given adjacency matrix
-
-#' Find the largest partial clique within a given an adjacency matrix
-
-#' Find the largest partial clique within a given an adjacency matrix
-#'
 #' @param adj_mat an adjacency matrix where within the largest partial clique will be searched
 #' @param alpha the minimum required edge density of the partial clique
 #'
 #' @return a list containing indices of the nodes within the clique and the actual edge density of the return partial clique
 #' @export
-compute_maximal_partial_clique <- function (adj_mat,
+compute_maximal_partial_clique7 <- function (adj_mat,
                                             alpha) {
   # check arguments
   stopifnot(
-  ## check adjacency matrix is valid
+    ## check adjacency matrix is valid
     # no row or column names)
     is.null(colnames(adj_mat)), is.null(rownames(adj_mat)),
     # has between 5 and 50 (inclusive) rows/columns
@@ -27,7 +21,7 @@ compute_maximal_partial_clique <- function (adj_mat,
     all(diag(adj_mat) == 1),
     # symmetric matrix (equal to its transpose)
     all.equal(adj_mat, t(adj_mat)),
-  ## check alpha is valid
+    ## check alpha is valid
     # check alpha is a single numeric value
     length(alpha) == 1, is.numeric(alpha),
     # check alpha is within [0.5, 1]
@@ -41,7 +35,7 @@ compute_maximal_partial_clique <- function (adj_mat,
   for (size in seq(n, 1, by = -1)) {
     # organize all possible combinations of nodes of variable size
     # each of these will be assessed as a candidate partial clique
-    combinations <- combn(nrow(adj_mat), size)
+    combinations <- utils::combn(nrow(adj_mat), size)
     # iterate through all sub-matrices of a given size
     for (i in 1:ncol(combinations)) {
       subset <- combinations[,i] # nodes in current sub-matrix
@@ -49,41 +43,41 @@ compute_maximal_partial_clique <- function (adj_mat,
       # if this sub-matrix satisfies our partial clique requirements,
       # because we are working from largest to smallest sub-matrix,
       # we are done!
-      if (is_partial_clique(submatrix, alpha)) {
+      if (is_partial_clique_7(submatrix, alpha)) {
         # compute the actual edge density of our partial clique
-  # indices of nodes within the maximum partial clique
-  subset = NULL
-  # percentage of edges within the maximum partial clique
-  edge_density = NULL
+          # indices of nodes within the maximum partial clique
+          subset = NULL
+          # percentage of edges within the maximum partial clique
+          edge_density = NULL
 
-  n <- nrow(adj_mat)
-  # iterate over all possible clique sizes, from the largest
-  for (size in seq(n, 1, by = -1)) {
-    combinations <- combn(nrow(adj_mat), size)
-    # iterate over all possible cliques of given size
-    for (i in 1:ncol(combinations)) {
-      subset <- combinations[,i]
-      submatrix <- adj_mat[subset, subset]
-      # if partial clique found, exit and return
-      if (is_partial_clique(submatrix, alpha)) {
-        m <- nrow(submatrix)
-        max_edges <- m*(m-1)/2
-        actual_edges <- (sum(submatrix) - m) / 2
-        edge_density <- round(actual_edges / max_edges, 2)
-        # mark the indices of nodes within the partial clique subset
-        clique_idx <- rep(0, n)
-        clique_idx[subset] <- 1
-        return(list(clique_idx=clique_idx,
-                    edge_density=edge_density,
-                    subset=subset,
-                    partial_clique=submatrix))
-        # a partial clique will always be achieved, even if it is a single node
-      }
-    }
-  }
-        return(list(clique_idx=subset,
-                    edge_density=edge_density,
-                    partial_clique=submatrix))
+          n <- nrow(adj_mat)
+          # iterate over all possible clique sizes, from the largest
+          for (size in seq(n, 1, by = -1)) {
+            combinations <- utils::combn(nrow(adj_mat), size)
+            # iterate over all possible cliques of given size
+            for (i in 1:ncol(combinations)) {
+              subset <- combinations[,i]
+              submatrix <- adj_mat[subset, subset]
+              # if partial clique found, exit and return
+              if (is_partial_clique_7(submatrix, alpha)) {
+                m <- nrow(submatrix)
+                max_edges <- m*(m-1)/2
+                actual_edges <- (sum(submatrix) - m) / 2
+                edge_density <- round(actual_edges / max_edges, 2)
+                # mark the indices of nodes within the partial clique subset
+                clique_idx <- rep(0, n)
+                clique_idx[subset] <- 1
+                return(list(clique_idx=which(clique_idx == 1),
+                            edge_density=edge_density,
+                            subset=subset,
+                            partial_clique=submatrix))
+                # a partial clique will always be achieved, even if it is a single node
+              }
+            }
+          }
+          return(list(clique_idx=subset,
+                      edge_density=edge_density,
+                      partial_clique=submatrix))
       }
     }
   }
@@ -100,7 +94,6 @@ compute_maximal_partial_clique <- function (adj_mat,
   #
   # return(list(clique_idx = clique_idx,
   #             edge_density = edge_density))
-
 }
 
 
@@ -115,8 +108,7 @@ compute_maximal_partial_clique <- function (adj_mat,
 #' @param alpha the minimum required edge density of the partial clique
 #'
 #' @return TRUE or FALSE depending on whether the given submatrix forms a partial clique
-#' @export
-is_partial_clique <- function(submatrix, alpha = 1) {
+is_partial_clique_7 <- function(submatrix, alpha = 1) {
   m <- nrow(submatrix)
   max_edges <- m*(m-1)/2
   min_edges <- alpha * max_edges
