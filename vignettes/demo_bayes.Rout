@@ -1,0 +1,52 @@
+
+R version 4.2.3 (2023-03-15) -- "Shortstop Beagle"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # store some useful information
+> date_of_run <- Sys.time()
+> session_info <- devtools::session_info()
+> set.seed(10)
+> 
+> # generate a random matrix
+> p <- 2000
+> mat <- matrix(rnorm(p^2), p, p)
+> mat <- mat + t(mat)
+> 
+> # print out some elements of the matrix
+> print(mat[1:5,1:5])
+            [,1]       [,2]       [,3]       [,4]       [,5]
+[1,]  0.03749234 -0.4921175 -2.7169913  0.4922677 -0.3496812
+[2,] -0.49211752  1.5161712  0.8162452 -2.2510224 -0.6960813
+[3,] -2.71699128  0.8162452  0.8814395 -0.1036507 -0.4105867
+[4,]  0.49226768 -2.2510224 -0.1036507  2.1032605 -0.8227643
+[5,] -0.34968118 -0.6960813 -0.4105867 -0.8227643 -2.6417657
+> 
+> # compute eigenvalues
+> res <- eigen(mat)
+> 
+> # save the results
+> save(mat, res,
++      date_of_run, session_info,
++      file = "~/demo_bayes_output.RData")
+> 
+> print("Done! :)")
+[1] "Done! :)"
+> 
+> proc.time()
+   user  system elapsed 
+ 11.460   0.415  13.618 
