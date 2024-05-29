@@ -9,7 +9,6 @@ run_simulation <- function(
     alpha_vec = c(0.5, 0.6, 0.7, 0.8, 0.9, 1)
     ) {
 
-  rm(list=ls())
   set.seed(10)
   library(UWBiost561)
 
