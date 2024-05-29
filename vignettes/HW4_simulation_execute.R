@@ -1,5 +1,13 @@
+#' Function to run simulation study
+#'
+#' @param alpha_vec Vector of alpha values
+#'
+#' @return
+#' @export
 run_simulation <- function(
-    alpha_vec = c(0.5, 0.75, 1)) {
+    # alpha_vec = c(0.5, 0.75, 1)
+    alpha_vec = c(0.5, 0.6, 0.7, 0.8, 0.9, 1)
+    ) {
 
   rm(list=ls())
   set.seed(10)
@@ -7,8 +15,6 @@ run_simulation <- function(
 
   imp_numbers <- 1:25
   trials <- 5
-  alpha_vec <- c(0.5, 0.75, 1)
-  # alpha_vec <- c(0.5, 0.6, 0.7, 0.8, 0.9, 1)
 
   # loop over the levels
   level_trial_list <- lapply(alpha_vec, function(alpha){
