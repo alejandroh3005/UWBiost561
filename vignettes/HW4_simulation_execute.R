@@ -4,14 +4,12 @@
 #'
 #' @return
 #' @export
-run_simulation <- function(
-    # alpha_vec = c(0.5, 0.75, 1)
-    alpha_vec = c(0.5, 0.6, 0.7, 0.8, 0.9, 1)
-    ) {
+run_simulation <- function() {
 
-  rm(list=ls())
   set.seed(10)
   library(UWBiost561)
+
+  alpha_vec = c(0.5, 0.6, 0.7, 0.8, 0.9, 1)
 
   imp_numbers <- 1:25
   trials <- 5
