@@ -60,3 +60,5 @@ run_simulation <- function(
 
 
 }
+
+run_simulation()
