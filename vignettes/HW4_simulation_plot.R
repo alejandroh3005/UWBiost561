@@ -1,7 +1,7 @@
 # Please run this after running hw4-demo_bayes_execute.slurm
 
 rm(list=ls())
-load("~/demo_simulation.RData")
+load("~/HW4_simulation_execute.RData")
 library(ggplot2)
 library(cowplot)
 
@@ -47,12 +47,12 @@ ggplot_list <- lapply(1:length(level_trial_list), function(level_number){
   gg <- gg + ggplot2::geom_bar(stat = "identity")
   gg <- gg + ggplot2::scale_x_discrete(limits = method_names)
   gg <- gg + ggplot2::labs(x = "Method",
-                           y = "Number of wins",
+                           y = "Number of correct solutions",
                            title = paste("For alpha =", alpha))
   return(gg)
 })
 
 plot_all <- cowplot::plot_grid(plotlist = ggplot_list, ncol = 1)
 # this is assuming your UWBiost561 package was installed into your home directory on Bayes!
-ggplot2::ggsave(plot_all, file = "~/UWBiost561/vignettes/hw4-demo_bayes_plot.png",
+ggplot2::ggsave(plot_all, file = "~/UWBiost561/vignettes/HW4_simulation.png",
                 height = 7, width = 9, units = "in")

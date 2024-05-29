@@ -4,7 +4,7 @@
 \alias{generate_partial_clique}
 \title{Generate a adjacency matrix representing a matrix containing a partial clique}
 \usage{
-generate_partial_clique(n, clique_fraction, clique_edge_density)
+generate_partial_clique(n, clique_fraction = 0.5, clique_edge_density = 0.5)
 }
 \arguments{
 \item{n}{the number of nodes in the network}
