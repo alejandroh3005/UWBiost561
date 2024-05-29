@@ -17,17 +17,21 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> run_simulation <- function(
-+     alpha_vec = c(0.5, 0.75, 1)) {
+> #' Function to run simulation study
+> #'
+> #' @param alpha_vec Vector of alpha values
+> #'
+> #' @return
+> #' @export
+> run_simulation <- function() {
 + 
-+   rm(list=ls())
 +   set.seed(10)
 +   library(UWBiost561)
 + 
++   alpha_vec = c(0.5, 0.6, 0.7, 0.8, 0.9, 1)
++ 
 +   imp_numbers <- 1:25
 +   trials <- 5
-+   alpha_vec <- c(0.5, 0.75, 1)
-+   # alpha_vec <- c(0.5, 0.6, 0.7, 0.8, 0.9, 1)
 + 
 +   # loop over the levels
 +   level_trial_list <- lapply(alpha_vec, function(alpha){
@@ -93,7 +97,43 @@ Type 'q()' to quit R.
 [1] "Working on trial: 5"
 *************************
 [1] "===="
-[1] "Value of alpha: 0.75"
+[1] "Value of alpha: 0.6"
+[1] "Working on trial: 1"
+*************************
+[1] "Working on trial: 2"
+*************************
+[1] "Working on trial: 3"
+*************************
+[1] "Working on trial: 4"
+*************************
+[1] "Working on trial: 5"
+*************************
+[1] "===="
+[1] "Value of alpha: 0.7"
+[1] "Working on trial: 1"
+*************************
+[1] "Working on trial: 2"
+*************************
+[1] "Working on trial: 3"
+*************************
+[1] "Working on trial: 4"
+*************************
+[1] "Working on trial: 5"
+*************************
+[1] "===="
+[1] "Value of alpha: 0.8"
+[1] "Working on trial: 1"
+*************************
+[1] "Working on trial: 2"
+*************************
+[1] "Working on trial: 3"
+*************************
+[1] "Working on trial: 4"
+*************************
+[1] "Working on trial: 5"
+*************************
+[1] "===="
+[1] "Value of alpha: 0.9"
 [1] "Working on trial: 1"
 *************************
 [1] "Working on trial: 2"
@@ -120,4 +160,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-320.702   1.330 323.211 
+770.428   7.926 780.035 
