@@ -9,9 +9,12 @@ output:
       toc_collapsed: true
     theme: united
 vignette: >
-  %\VignetteIndexEntry{BIOST 561: Homework 3}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{BIOST 561: Homework 4}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include = FALSE}

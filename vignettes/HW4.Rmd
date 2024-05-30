@@ -123,7 +123,7 @@ to your R Markdown file.)]{style="color: blue;"}
 summarize what you think the implementations are doing in one to four
 sentences each. (This is to practice reading other people's code.)
 
-**Implementation 1 uses modified versions of the Bron-Kerbosch
+Implementation 1 uses modified versions of the Bron-Kerbosch
 algorithm, which is designed to compute maximal full cliques, to compute
 maximal partial cliques, allowing users to specify `"simple"` or
 "`pivot`" (Bron & Kerbosch, 1973). Specifically, if `alpha` \< 1, the
@@ -134,14 +134,14 @@ density of `alpha/2` (to help find cliques for which two of the nodes
 alone don't satisfy alpha density, but together the clique does), and
 then it searches through the final results to choose the largest clique
 which satisfies `alpha`. If `alpha = 1` is set, then the Bron-Kerbosch
-algorithm is applied directly.**
+algorithm is applied directly.
 
-**Implementation 17 enumerates over each row to find where the edges
+Implementation 17 enumerates over each row to find where the edges
 are. It starts with the first row as the first partial clique. Then, for
 each subsequent row, check if it connects with any of the existing
 partial cliques. If it does, append to the existing partial cliques; if
 it doesn't, create a new partial clique for this row. Finally, it return
-the partial clique with the most nodes.**
+the partial clique with the most nodes.
 
 <u>**Question 1C**</u>: In terms of <u>**coding clarity**</u> (i.e.,
 <u>**not**</u> whether the code gives a good answer), are there
@@ -154,14 +154,14 @@ no suggestions if you thought the code was spectacular -- even if it's
 not returning a great answer, you can easily understand what the code
 does despite being written by someone else.)
 
-**Implementation 1: I would recommend more intentional names for your
+Implementation 1: I would recommend more intentional names for your
 "find_clique" functions. The repetitive naming good to indicate they are
 very similar. Also I would make clear in documentation that these
-methods are recursive- they look to be :-)**
+methods are recursive- they look to be :-)
 
-**Implementation 17: Good job! Personally I am a fan of attaching
+Implementation 17: Good job! Personally I am a fan of attaching
 comments to their code lines rather than stacking them above the code
-block, but to each there own :-)**
+block, but to each there own :-)
 
 <u>**Question 1D**</u>: In HW3, you wrote down at least 5 unit tests for
 your implementation of `compute_maximal_partial_clique()`. <u>**In this
@@ -824,9 +824,9 @@ Please write (in one to five sentences) what you are thinking of doing
 for your final project. If your answer hasn't changed since HW3, you can
 copy-paste your answer from HW3 into this question for HW4.
 
-**I think I will use the R code for the BIOST 579 class: Data Analysis
+I will use the R code for the BIOST 579 class: Data Analysis
 and Reporting, which is mainly exploratory data analysis. The functions
-may be constructing plots and graphs in a streamlined way.**
+may be constructing plots and graphs in a streamlined way.
 
 # Q5: Feedback (Optional)
 
@@ -837,4 +837,3 @@ difficulty/pacing, or some questions/confusions you had about course
 material. Your feedback can help shape the course for the rest of this
 quarter and future years. Please be mindful and polite when providing
 feedback. You may leave this question blank.
-

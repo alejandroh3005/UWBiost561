@@ -2,7 +2,7 @@
 #'
 #' @param alpha_vec Vector of alpha values
 #'
-#' @return
+#' @return Null
 #' @export
 run_simulation <- function() {
 
